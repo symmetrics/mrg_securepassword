@@ -6,7 +6,7 @@
 # =============================================================================
 NAME = 'symmetrics_module_securepassword'
 
-TAGS = ()
+TAGS = ('php', 'magento', 'module', 'symmetrics', 'mrg', 'password', 'passwort')
 
 LICENSE = 'AFL 3.0'
 
@@ -19,36 +19,33 @@ INSTALL_PATH = ''
 # responsibilities
 # =============================================================================
 TEAM_LEADER = {
-    '[firstname] [lastname]': '[email]',
+    'Torsten Walluhn': 'tw@symmetrics.de',
 }
 
 MAINTAINER = {
-    '[firstname] [lastname]': '[email]',
+    'Eric Reiche': 'er@symmetrics.de',
 }
 
 AUTHORS = {
-    '[firstname] [lastname]': '[email]',
+    'Eric Reiche': 'er@symmetrics.de',
 }
 
 # =============================================================================
 # additional infos
 # =============================================================================
-INFO = '[short description, max 60 chars]'
+INFO = 'Unterbindet die Eingabe der Email Adresse als Passwort'
 
 SUMMARY = '''
-    [long description
-    with multiple lines]
 '''
 
 NOTES = '''
-    [special notes, restrictions, bugs etc.]
 '''
 
 # =============================================================================
 # relations
 # =============================================================================
 REQUIRES = [
-    # {'magento': '*', 'magento_enterprise': '*'},
+     {'magento': '*', 'magento_enterprise': '*'},
 ]
 
 EXCLUDES = {
@@ -58,13 +55,11 @@ VIRTUAL = {
 }
 
 DEPENDS_ON_FILES = (
-    'app/code/core/.../1.php',
-    'app/code/core/.../2.php',
-    'app/code/core/.../3.php',
 )
 
 PEAR_KEY = ''
 
 COMPATIBLE_WITH = {
-    # 'magento': ['1.3.2', '1.3.2.1', ...],
+     'magento': ['1.4.0.0'],
+     'magento_enterprise': ['1.7.0.0'],
 }
