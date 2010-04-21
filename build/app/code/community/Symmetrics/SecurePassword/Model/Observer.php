@@ -150,9 +150,7 @@ class Symmetrics_SecurePassword_Model_Observer
             }
         } catch (Exception $e) {
             $this->_getSession()
-                ->addError(
-                    Mage::helper('securepassword')->__($e->getMessage())
-                );
+                ->addError(Mage::helper('securepassword')->__($e->getMessage()));
             $response = $controllerAction->getResponse();
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
