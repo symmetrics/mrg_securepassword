@@ -90,4 +90,15 @@
             </securepassword_read>
         </resources>
     </global>
+    <frontend>
+        <translate>
+            <modules>
+                <Symmetrics_SecurePassword>
+                    <files>
+                        <default>Symmetrics_SecurePassword.csv</default>
+                    </files>
+                </Symmetrics_SecurePassword>
+            </modules>
+        </translate>
+    </frontend>
 </config>
