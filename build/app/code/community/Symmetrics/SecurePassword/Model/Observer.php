@@ -127,7 +127,7 @@ class Symmetrics_SecurePassword_Model_Observer
                     $customer->setStore($this->_getStore())
                         ->loadByEmail($loginParams['username']);
                     if (!$customer->getId()) {
-                        throw new Exception(Mage::helper('securepassword')->__('Login failed.'));
+                        throw new Exception('Login failed.');
                     }
                     
                     $attempts = $customer->getFailedLogins();
@@ -139,17 +139,20 @@ class Symmetrics_SecurePassword_Model_Observer
                     $timeLock = ($now - $lastAttempt < self::ACCOUNT_LOCK_TIME);
                     if ($attemptLock && $timeLock) {
                         throw new Exception(
-                            Mage::helper('securepassword')->__(
-                                'Your account is locked due to too many failed login attempts.'
-                            )
+                            'Your account is locked due to too many failed login attempts.'
                         );
                     }
                 } else {
-                    throw new Exception(Mage::helper('securepassword')->__('The email address you entered is invalid.'));
+                    throw new Exception(
+                        'The email address you entered is invalid.'
+                    );
                 }
             }
         } catch (Exception $e) {
-            $this->_getSession()->addError($e->getMessage());
+            $this->_getSession()
+                ->addError(
+                    Mage::helper('securepassword')->__($e->getMessage())
+                );
             $response = $controllerAction->getResponse();
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
