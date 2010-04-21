@@ -100,5 +100,12 @@
                 </Symmetrics_SecurePassword>
             </modules>
         </translate>
+        <layout>
+            <updates>
+                <securepassword>
+                    <file>securepassword.xml</file>
+                </securepassword>
+            </updates>
+        </layout>
     </frontend>
 </config>
