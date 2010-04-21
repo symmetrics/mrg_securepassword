@@ -28,6 +28,7 @@ MAINTAINER = {
 
 AUTHORS = {
     'Eric Reiche': 'er@symmetrics.de',
+    'Yauhen Yakimovich': 'yy@symmetrics.de'
 }
 
 # =============================================================================
