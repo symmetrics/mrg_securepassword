@@ -43,8 +43,8 @@ $installer->addAttribute(
     'last_failed_login',
     array(
         'label' => 'Last failed login',
-        'input' => 'int',
-        'type'  => 'text',
+        'input' => 'text',
+        'type'  => 'int',
         'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
         'is_visible' => false,
         'required' => false,

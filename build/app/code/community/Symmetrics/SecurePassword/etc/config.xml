@@ -54,10 +54,19 @@
                     <symmetrics_securepassword_model_observer>
                         <type>singleton</type>
                         <class>Symmetrics_SecurePassword_Model_Observer</class>
-                        <method>customerLogin</method>
+                        <method>customerPreLogin</method>
                     </symmetrics_securepassword_model_observer>
                 </observers>
             </controller_action_predispatch_customer_account_loginPost>
+            <controller_action_postdispatch_customer_account_loginPost>
+                <observers>
+                    <symmetrics_securepassword_model_observer>
+                        <type>singleton</type>
+                        <class>Symmetrics_SecurePassword_Model_Observer</class>
+                        <method>customerPostLogin</method>
+                    </symmetrics_securepassword_model_observer>
+                </observers>
+            </controller_action_postdispatch_customer_account_loginPost>
          </events>        
          <resources>
             <securepassword_setup>

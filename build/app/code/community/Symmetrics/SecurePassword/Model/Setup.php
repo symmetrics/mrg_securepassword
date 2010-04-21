@@ -43,13 +43,18 @@ class Symmetrics_SecurePassword_Model_Setup extends Mage_Eav_Model_Entity_Setup
      * 
      * @return Symmetrics_SecurePassword_Model_Setup
      */
-    public function addAttribute($entityTypeId, $code, $attr)
+    public function addAttribute($entityTypeId, $code, array $attr)
     {
         parent::addAttribute($entityTypeId, $code, $attr);
         
-        Mage::getModel('customer/attribute')->loadByCode($code)
-            ->setData($attr)
-            ->save();
+        /**
+         * @var Mage_Customer_Model_Attribute $attributeModel
+         */
+        $attributeModel = Mage::getModel('customer/attribute')->loadByCode($entityTypeId, $code);
+        foreach ($attr as $entity => $value) {
+            $attributeModel->setData($entity, $value);
+        }
+        $attributeModel->save();
         
         return $this;
     }
