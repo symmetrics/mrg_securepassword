@@ -49,6 +49,36 @@
                     </symmetrics_securepassword_model_observer>
                 </observers>
             </customer_save_before>
-         </events>
+            <controller_action_predispatch_customer_account_loginPost>
+                <observers>
+                    <symmetrics_securepassword_model_observer>
+                        <type>singleton</type>
+                        <class>Symmetrics_SecurePassword_Model_Observer</class>
+                        <method>customerLogin</method>
+                    </symmetrics_securepassword_model_observer>
+                </observers>
+            </controller_action_predispatch_customer_account_loginPost>
+         </events>        
+         <resources>
+            <securepassword_setup>
+                <setup>
+                    <module>Symmetrics_SecurePassword</module>
+                    <class>Symmetrics_SecurePassword_Model_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </securepassword_setup>
+            <securepassword_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </securepassword_write>
+            <securepassword_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </securepassword_read>
+        </resources>
     </global>
 </config>

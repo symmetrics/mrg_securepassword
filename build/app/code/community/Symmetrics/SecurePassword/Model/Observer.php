@@ -50,4 +50,35 @@ class Symmetrics_SecurePassword_Model_Observer
         
         return $this;
     }
+    
+    /**
+     * When customer tries to login
+     * 
+     * @param Varien_Event_Observer $observer Event observer object
+     * 
+     * @return Symmetrics_SecurePassword_Model_Observer
+     */
+    public function customerLogin($observer)
+    {
+        if (!$this->_getSession()->isLoggedIn()) {
+            $loginParams = $observer->getControllerAction()->getRequest()->getParams();
+            if (isset($loginParams['login']) && isset($loginParams['login']['username'])) {
+                $loginParams = $loginParams['login'];
+            }
+            
+        }
+        die();
+        return $this;
+    }
+    
+    /**
+     * Retrieve customer session model object
+     *
+     * @return Mage_Customer_Model_Session
+     */
+    protected function _getSession()
+    {
+        return Mage::getSingleton('customer/session');
+    }
+    
 }
