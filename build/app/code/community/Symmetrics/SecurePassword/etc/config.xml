@@ -25,7 +25,7 @@
 <config>
     <modules>
         <Symmetrics_SecurePassword>
-            <version>0.1.3</version>
+            <version>0.1.5</version>
         </Symmetrics_SecurePassword>
     </modules>
     <global>
@@ -108,4 +108,24 @@
             </updates>
         </layout>
     </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Symmetrics_SecurePassword>
+                    <files>
+                        <default>Symmetrics_SecurePassword.csv</default>
+                    </files>
+                </Symmetrics_SecurePassword>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <customer>
+            <password>
+                <loginAttempts>5</loginAttempts>
+                <attemptSpan>900</attemptSpan>
+                <lockTime>900</lockTime>
+            </password>
+        </customer>
+    </default>
 </config>

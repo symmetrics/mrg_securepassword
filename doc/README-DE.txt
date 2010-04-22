@@ -6,6 +6,11 @@ Extrahieren Sie den Inhalt dieses Archivs in Ihr Magento Verzeichnis.
 ** USAGE
 Dieses Modul verhindert, dass man die angegebene E-Mail Adresse auch
 als Passwort verwenden kann.
+Außerdem bietet es einen Brute-Force Schutz für das Login im
+Frontend. Es sperrt nach mehreren fehlgeschlagenen Login-Versuchen
+zeitweise den Account.
+Im Registrierungsformular wird eine Notiz eingeblendet, die darauf
+hinweist, wie ein sicheres Passwort aussehen sollte.
 
 ** FUNCTIONALITY
 *** A: Gibt eine Fehlermeldung aus, wenn man versucht, bei der

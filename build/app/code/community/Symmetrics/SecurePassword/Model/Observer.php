@@ -35,21 +35,6 @@
 class Symmetrics_SecurePassword_Model_Observer
 {
     /**
-     * @const ATTEMPT_SPAN time in seconds in which attemts shall be summarized
-     */
-    const ATTEMPT_SPAN = 900;
-    
-    /**
-     * @const ACCOUNT_LOCK_TIME time in seconds for what the account shall be locked
-     */
-    const ACCOUNT_LOCK_TIME = 900;
-    
-    /**
-     * @const LOCK_ATTEMPTS account will be locked after X login attempts
-     */
-    const LOCK_ATTEMPTS = 5;
-    
-    /**
      * Before customer is saved
      * 
      * @param Varien_Event_Observer $observer Event observer object
@@ -60,7 +45,16 @@ class Symmetrics_SecurePassword_Model_Observer
     {
         $customer = $observer->getCustomer();
         if ($customer->getEmail() == $customer->getPassword()) {
-            Mage::throwException(Mage::helper('securepassword')->__('Your email and password must not be identical.'));
+            Mage::throwException(Mage::helper('securepassword')->__('Your email and password can not be equal.'));
+        }
+        // Dieser Check hier ist NIE true, deswegen kann man das Konto nicht entsperren
+        // attribut wird in upgrade 0.1.5 skript erstellt
+        //
+        if ($customer->getUnlockCustomer() == 1) {
+            $now = time();
+            $customer->setLastUnlockTime($now)
+                ->setUnlockCustomer(false)
+                ->save();
         }
         
         return $this;
@@ -88,13 +82,11 @@ class Symmetrics_SecurePassword_Model_Observer
                     if ($customer->getId()) {
                         $attempts = $customer->getFailedLogins();
                         $lastAttempt = $customer->getLastFailedLogin();
-                        $now = Mage::app()->getLocale()
-                            ->date()
-                            ->toString(Zend_Date::TIMESTAMP);
+                        $now = time();
                         if (!is_numeric($attempts)) {
                             $attempts = 1;
                         } else {
-                            if ($now - $lastAttempt > self::ATTEMPT_SPAN) {
+                            if ($now - $lastAttempt > $this->_getStoreConfig('attemptSpan')) {
                                 $attempts = 0;
                             }
                             $attempts++;
@@ -132,14 +124,24 @@ class Symmetrics_SecurePassword_Model_Observer
                         throw new Exception('Login failed.');
                     }
                     
+                    $lastAttempt = $customer->getLastFailedLogin();
+                    $lastUnlock = $customer->getLastUnlockTime();
+                    
+                    $unlocked = ($lastUnlock > 0 && $lastUnlock > $lastAttempt);
+                    
+                    if ($unlocked) {
+                        $customer->setFailedLogins(0)
+                            ->setLastFailedLogin(0)
+                            ->save();
+                    }
+                    Mage::log($customer->getData());
                     $attempts = $customer->getFailedLogins();
                     $lastAttempt = $customer->getLastFailedLogin();
-                    $now = Mage::app()->getLocale()
-                        ->date()
-                        ->toString(Zend_Date::TIMESTAMP);
-                    $attemptLock = $attempts >= self::LOCK_ATTEMPTS;
-                    $timeLock = ($now - $lastAttempt < self::ACCOUNT_LOCK_TIME);
-                    if ($attemptLock && $timeLock) {
+                    $now = time();
+                    $attemptLock = $attempts >= $this->_getStoreConfig('loginAttempts');
+                    $timeLock = ($now - $lastAttempt < $this->_getStoreConfig('lockTime'));
+                    
+                    if ($attemptLock && $timeLock && !$unlocked) {
                         throw new Exception(
                             'Your account is locked due to too many failed login attempts.'
                         );
@@ -156,6 +158,7 @@ class Symmetrics_SecurePassword_Model_Observer
             $response = $controllerAction->getResponse();
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
+            die();
         }
         
         return $this;
@@ -189,5 +192,15 @@ class Symmetrics_SecurePassword_Model_Observer
     protected function _getStoreId()
     {
         return $this->_getStore()->getId();
+    }
+    
+    /**
+     * Get password settings from system configuration
+     * 
+     * @return mixed
+     */
+    protected function _getStoreConfig($parameter)
+    {
+        return Mage::getStoreConfig('customer/password/' . $parameter, $this->_getStore());
     }
 }
