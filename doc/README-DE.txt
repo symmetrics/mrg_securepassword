@@ -19,7 +19,9 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
         wie ein sicheres Passwort sein sollte.
 *** C: Sperrt das Benutzerkonto nach x fehlerhaften Einlog-Versuchen.
 *** D: Fügt 3 Felder in der System Konfiguration unter
-        Kunden/Kundenkonfiguration/Passwortoptionen/
+        Kunden/Kundenkonfiguration/Passwortoptionen ein, mit denen die
+        Anzahl der fehlgeschlagenen Versuche, die Sperrzeit und die Versuchszeit
+        geändert werden können.
 *** E: Im Backend wird ein Feld hinzugefügt, womit der Kunde manuell
         entsperrt werden kann.
 
@@ -39,7 +41,7 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
         PostDispatch loggt fehlerhafte Versuche und setzt bei bedarf
         die beiden angelegten Attribute, sodass die PreDispatch Methode
         den Login-Versuch abbricht.
-*** D: 
+*** D: Die 3 Felder werden über die system.xml angelegt.
 *** E: Es werden über ein Migrationsskript 2 Felder angelegt: 
         last_unlock_time und unlock_customer.
         Letzteres kann in der Kundenverwaltung im Backend auf "ja" gestellt
@@ -67,6 +69,9 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
         in diesen 15 Minuten wieder versuchen, einzuloggen, fängt die
         Sperrzeit von vorn an.
 *** D: 
+**** 1. Prüfen Sie, ob die Felder vorhanden und speicherbar sind.
+**** 2. Ändern Sie die Werte und prüfen Sie, ob sich die Funktionalität
+        entsprechend der neuen Werte anpasst.
 *** E: 
 **** 1. Geben Sie das Passwort solange falsch ein, bis der Account gesperrt
         wird.
