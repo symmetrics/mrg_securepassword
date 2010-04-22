@@ -45,7 +45,7 @@ class Symmetrics_SecurePassword_Model_Observer
     const ACCOUNT_LOCK_TIME = 900;
     
     /**
-     * @const Account will be locked after X login attempts
+     * @const LOCK_ATTEMPTS account will be locked after X login attempts
      */
     const LOCK_ATTEMPTS = 5;
     
@@ -88,7 +88,9 @@ class Symmetrics_SecurePassword_Model_Observer
                     if ($customer->getId()) {
                         $attempts = $customer->getFailedLogins();
                         $lastAttempt = $customer->getLastFailedLogin();
-                        $now = Mage::app()->getLocale()->date()->toString(Zend_Date::TIMESTAMP);
+                        $now = Mage::app()->getLocale()
+                            ->date()
+                            ->toString(Zend_Date::TIMESTAMP);
                         if (!is_numeric($attempts)) {
                             $attempts = 1;
                         } else {
@@ -154,7 +156,6 @@ class Symmetrics_SecurePassword_Model_Observer
             $response = $controllerAction->getResponse();
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
-            die();
         }
         
         return $this;
@@ -189,5 +190,4 @@ class Symmetrics_SecurePassword_Model_Observer
     {
         return $this->_getStore()->getId();
     }
-    
 }
