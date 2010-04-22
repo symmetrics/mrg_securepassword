@@ -42,6 +42,7 @@ $installer->addAttribute(
     array(
         'label' => 'Unlock customer',
         'input' => 'checkbox',
+        'type'  => 'int',
         'frontend_label' => 'Unlock customer',
         'visible' => true,
         'required' => false,
