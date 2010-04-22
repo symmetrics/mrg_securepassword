@@ -41,14 +41,15 @@ $installer->addAttribute(
     'unlock_customer',
     array(
         'label' => 'Unlock customer',
-        'input' => 'checkbox',
+        'input' => 'select',
         'type'  => 'int',
         'frontend_label' => 'Unlock customer',
         'visible' => true,
         'required' => false,
         'user_defined' => true,
         'is_visible_on_front' => false,
-        'default' => 0
+        'default' => 0,
+        'source' => 'eav/entity_attribute_source_boolean'
     )
 );
 

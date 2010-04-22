@@ -47,14 +47,13 @@ class Symmetrics_SecurePassword_Model_Observer
         if ($customer->getEmail() == $customer->getPassword()) {
             Mage::throwException(Mage::helper('securepassword')->__('Your email and password can not be equal.'));
         }
-        // Dieser Check hier ist NIE true, deswegen kann man das Konto nicht entsperren
-        // attribut wird in upgrade 0.1.5 skript erstellt
-        //
+        
         if ($customer->getUnlockCustomer() == 1) {
             $now = time();
             $customer->setLastUnlockTime($now)
-                ->setUnlockCustomer(false)
-                ->save();
+                ->setUnlockCustomer(0)
+                ->setFailedLogins(0)
+                ->setLastFailedLogin(0);
         }
         
         return $this;
