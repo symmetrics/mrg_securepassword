@@ -196,6 +196,8 @@ class Symmetrics_SecurePassword_Model_Observer
     /**
      * Get password settings from system configuration
      * 
+     * @param string $parameter parameter to get
+     *
      * @return mixed
      */
     protected function _getStoreConfig($parameter)
