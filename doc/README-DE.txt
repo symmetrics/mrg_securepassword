@@ -50,6 +50,7 @@ E: Es werden über ein Migrationsskript 2 Felder angelegt:
         (s. Punkt B) wieder auuf 0, damit der Kunde sich einloggen kann.
 
 ** PROBLEMS
+Es sind keine Probleme bekannt.
 
 * TESTCASES
 ** BASIC
