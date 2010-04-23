@@ -123,11 +123,15 @@ class Symmetrics_SecurePassword_Model_Observer
                     if (!$customer->getId()) {
                         throw new Exception('Login failed.');
                     }
+                    $now = time();
+                    $lockTime = $this->_getStoreConfig('lockTime');
                     
                     $lastAttempt = $customer->getLastFailedLogin();
                     $lastUnlock = $customer->getLastUnlockTime();
                     
-                    $unlocked = ($lastUnlock > 0 && $lastUnlock > $lastAttempt);
+                    $unlockedAdmin = ($lastUnlock > 0 && $lastUnlock > $lastAttempt);
+                    $unlockedTime = ($now - $lastAttempt > $lockTime);
+                    $unlocked = ($unlockedAdmin || $unlockedTime);
                     
                     if ($unlocked) {
                         $customer->setFailedLogins(0)
@@ -137,9 +141,8 @@ class Symmetrics_SecurePassword_Model_Observer
                     
                     $attempts = $customer->getFailedLogins();
                     $lastAttempt = $customer->getLastFailedLogin();
-                    $now = time();
                     $attemptLock = $attempts >= $this->_getStoreConfig('loginAttempts');
-                    $timeLock = ($now - $lastAttempt < $this->_getStoreConfig('lockTime'));
+                    $timeLock = ($now - $lastAttempt < $lockTime);
                     if ($attemptLock && $timeLock && !$unlocked) {
                         throw new Exception(
                             'Your account is locked due to too many failed login attempts.'
