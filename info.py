@@ -6,7 +6,8 @@
 # =============================================================================
 NAME = 'symmetrics_module_securepassword'
 
-TAGS = ('php', 'magento', 'module', 'symmetrics', 'mrg', 'password', 'passwort')
+TAGS = ('php', 'magento', 'module', 'symmetrics', 'mrg', 'password',
+'passwort')
 
 LICENSE = 'AFL 3.0'
 
@@ -28,7 +29,7 @@ MAINTAINER = {
 
 AUTHORS = {
     'Eric Reiche': 'er@symmetrics.de',
-    'Yauhen Yakimovich': 'yy@symmetrics.de'
+    'Yauhen Yakimovich': 'yy@symmetrics.de',
 }
 
 # =============================================================================
