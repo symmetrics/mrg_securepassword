@@ -97,6 +97,7 @@ class Symmetrics_SecurePassword_Model_Observer
                 }
             }
         }
+        
         return $this;
     }
     
@@ -133,13 +134,12 @@ class Symmetrics_SecurePassword_Model_Observer
                             ->setLastFailedLogin(0)
                             ->save();
                     }
-                    Mage::log($customer->getData());
+                    
                     $attempts = $customer->getFailedLogins();
                     $lastAttempt = $customer->getLastFailedLogin();
                     $now = time();
                     $attemptLock = $attempts >= $this->_getStoreConfig('loginAttempts');
                     $timeLock = ($now - $lastAttempt < $this->_getStoreConfig('lockTime'));
-                    
                     if ($attemptLock && $timeLock && !$unlocked) {
                         throw new Exception(
                             'Your account is locked due to too many failed login attempts.'

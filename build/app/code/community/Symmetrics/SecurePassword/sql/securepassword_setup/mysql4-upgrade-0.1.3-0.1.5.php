@@ -45,8 +45,10 @@ $installer->addAttribute(
         'type'  => 'int',
         'frontend_label' => 'Unlock customer',
         'visible' => true,
+        'is_visible' => true,
         'required' => false,
         'user_defined' => true,
+        'is_user_defined' => true,
         'is_visible_on_front' => false,
         'default' => 0,
         'source' => 'eav/entity_attribute_source_boolean'
