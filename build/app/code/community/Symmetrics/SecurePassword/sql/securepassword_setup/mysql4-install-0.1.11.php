@@ -26,6 +26,32 @@ $installer->startSetup();
 
 $installer->addAttribute(
     'customer',
+    'failed_logins',
+    array(
+        'label' => 'Failed logins',
+        'input' => 'int',
+        'type'  => 'text',
+        'is_visible' => false,
+        'required' => false,
+        'user_defined' => false,
+    )
+);
+
+$installer->addAttribute(
+    'customer',
+    'last_failed_login',
+    array(
+        'label' => 'Last failed login',
+        'input' => 'text',
+        'type'  => 'int',
+        'is_visible' => false,
+        'required' => false,
+        'user_defined' => false,
+    )
+);
+
+$installer->addAttribute(
+    'customer',
     'last_unlock_time',
     array(
         'label' => 'Last unlock time',
@@ -36,6 +62,7 @@ $installer->addAttribute(
         'user_defined' => false,
     )
 );
+
 $installer->addAttribute(
     'customer',
     'unlock_customer',
