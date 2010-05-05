@@ -20,66 +20,54 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @link      http://www.symmetrics.de/
  */
- 
+
 $installer = $this;
 $installer->startSetup();
 
-$installer->addAttribute(
-    'customer',
-    'failed_logins',
-    array(
-        'label' => 'Failed logins',
-        'input' => 'int',
-        'type'  => 'text',
-        'is_visible' => false,
-        'required' => false,
-        'user_defined' => false,
-    )
+$attributeData = array(
+    'label' => 'Failed logins',
+    'input' => 'int',
+    'type'  => 'text',
+    'is_visible' => false,
+    'required' => false,
+    'user_defined' => false,
 );
+$installer->addAttribute('customer', 'failed_logins', $attributeData);
 
-$installer->addAttribute(
-    'customer',
-    'last_failed_login',
-    array(
-        'label' => 'Last failed login',
-        'input' => 'text',
-        'type'  => 'int',
-        'is_visible' => false,
-        'required' => false,
-        'user_defined' => false,
-    )
+$attributeData = array(
+    'label' => 'Last failed login',
+    'input' => 'text',
+    'type'  => 'int',
+    'is_visible' => false,
+    'required' => false,
+    'user_defined' => false,
 );
+$installer->addAttribute('customer', 'last_failed_login', $attributeData);
 
-$installer->addAttribute(
-    'customer',
-    'last_unlock_time',
-    array(
-        'label' => 'Last unlock time',
-        'input' => 'text',
-        'type'  => 'int',
-        'is_visible' => false,
-        'required' => false,
-        'user_defined' => false,
-    )
+$attributeData = array(
+    'label' => 'Last unlock time',
+    'input' => 'text',
+    'type'  => 'int',
+    'is_visible' => false,
+    'required' => false,
+    'user_defined' => false,
 );
+$installer->addAttribute('customer', 'last_unlock_time', $attributeData);
 
-$installer->addAttribute(
-    'customer',
-    'unlock_customer',
-    array(
-        'label' => 'Unlock customer',
-        'input' => 'select',
-        'type'  => 'int',
-        'frontend_label' => 'Unlock customer',
-        'visible' => true,
-        'is_visible' => true,
-        'required' => false,
-        'user_defined' => true,
-        'is_user_defined' => true,
-        'is_visible_on_front' => false,
-        'default' => 0,
-        'source' => 'eav/entity_attribute_source_boolean'
-    )
+$attributeData = array(
+    'label' => 'Unlock customer',
+    'input' => 'select',
+    'type'  => 'int',
+    'frontend_label' => 'Unlock customer',
+    'visible' => true,
+    'is_visible' => true,
+    'required' => false,
+    'user_defined' => true,
+    'is_user_defined' => true,
+    'is_visible_on_front' => false,
+    'default' => 0,
+    'source' => 'eav/entity_attribute_source_boolean'
 );
+$installer->addAttribute('customer', 'unlock_customer', $attributeData);
 
 $installer->endSetup();
