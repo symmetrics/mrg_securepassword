@@ -67,7 +67,7 @@ Es sind keine Probleme bekannt.
         Account gesperrt wurde, auch wenn Sie das korrekte Passwort eingeben.
         Nach 15 Minuten sollte die Sperre wieder aufgehoben sein. Wenn Sie sich
         in diesen 15 Minuten wieder versuchen, einzuloggen, fängt die
-        Sperrzeit von vorn an.
+        Versuchszeit von vorn an.
 *** D: 
     1. Prüfen Sie, ob die Felder vorhanden und speicherbar sind.
     2. Ändern Sie die Werte und prüfen Sie, ob sich die Funktionalität
