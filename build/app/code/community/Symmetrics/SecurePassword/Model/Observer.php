@@ -96,6 +96,11 @@ class Symmetrics_SecurePassword_Model_Observer
                     }
                 }
             }
+        } else {
+            // Login succeeded
+            $customer = $this->_getSession()->getCustomer();
+            $customer->setFailedLogins(0)
+                ->save();
         }
         
         return $this;
@@ -161,6 +166,7 @@ class Symmetrics_SecurePassword_Model_Observer
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
             die();
+            // @todo: find a workaround for the "die" cmd
         }
         
         return $this;
