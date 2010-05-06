@@ -7,8 +7,8 @@ Extrahieren Sie den Inhalt dieses Archivs in Ihr Magento Verzeichnis.
 Dieses Modul verhindert, dass man die angegebene E-Mail Adresse auch
 als Passwort verwenden kann.
 Außerdem bietet es einen Brute-Force Schutz für das Login im
-Frontend. Es sperrt nach mehreren fehlgeschlagenen Login-Versuchen
-zeitweise den Account.
+Frontend. Es sperrt nach mehreren (einstellbar) fehlgeschlagenen
+Login-Versuchen zeitweise (einstellbar) den Account.
 Im Registrierungsformular wird eine Notiz eingeblendet, die darauf
 hinweist, wie ein sicheres Passwort aussehen sollte.
 
@@ -18,6 +18,8 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
 *** B: Fügt im Registrierungsformular eine Notiz hinzu, die beschreibt,
         wie ein sicheres Passwort sein sollte.
 *** C: Sperrt das Benutzerkonto nach x fehlerhaften Einlog-Versuchen.
+        Wenn der Benutzer sich nach dem z.B. 4. Versuch richtig einloggt,
+        wird der Zähler (für die falschen Versuche) auf 0 zurückgesetzt.
 *** D: Fügt 3 Felder in der System Konfiguration unter
         Kunden/Kundenkonfiguration/Passwortoptionen ein, mit denen die
         Anzahl der fehlgeschlagenen Versuche, die Sperrzeit und die Versuchszeit

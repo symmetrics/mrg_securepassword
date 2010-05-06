@@ -35,9 +35,11 @@ AUTHORS = {
 # =============================================================================
 # additional infos
 # =============================================================================
-INFO = 'Unterbindet die Eingabe der Email Adresse als Passwort'
+INFO = 'Bindet verschiedene Passwortrichtlinien ein'
 
 SUMMARY = '''
+Unterbindet die Eingabe der Email Adresse als Passwort, schützt vor Bruteforce
+Angriffen und bietet Hinweise, wie ein sicheres Passwort aussehen sollte.
 '''
 
 NOTES = '''
