@@ -24,6 +24,8 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
         Kunden/Kundenkonfiguration/Passwortoptionen ein, mit denen die
         Anzahl der fehlgeschlagenen Versuche, die Sperrzeit und die Versuchszeit
         geändert werden können.
+        Wenn die Sperrzeit oder die Versuchszeit auf 0 steht, ist der
+        Brute-Force Schutz de factor außer Kraft gesetzt.
 *** E: Im Backend wird ein Feld hinzugefügt, womit der Kunde manuell
         entsperrt werden kann.
 
@@ -52,7 +54,8 @@ E: Es werden über ein Migrationsskript 2 Felder angelegt:
         (s. Punkt B) wieder auuf 0, damit der Kunde sich einloggen kann.
 
 ** PROBLEMS
-Es sind keine Probleme bekannt.
+Der Passworthinweis im Registrierungsformular muss ggf. an das Design der 
+Website angepasst werden.
 
 * TESTCASES
 ** BASIC
@@ -81,3 +84,5 @@ Es sind keine Probleme bekannt.
         "Benutzer entsperren" auf "ja" und speichern Sie den Kunden
     3. Versuchen Sie sich im Frontend einzuloggen, das sollte jetzt ohne 
         Fehlermeldung funktionieren.
+    4. Sie können weitere verschieden Kombinationen aus Zeit und Login-Versuchen
+        kombinieren und prüfen, ob sich das Modul wie erwartet verhält.
