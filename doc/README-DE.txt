@@ -14,7 +14,7 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
 
 ** FUNCTIONALITY
 *** A: Gibt eine Fehlermeldung aus, wenn man versucht, bei der
-        Registrierung das E-Mail und Password Feld identisch auszufüllen.
+        Registrierung das E-Mail und Password-Feld identisch auszufüllen.
 *** B: Fügt im Registrierungsformular eine Notiz hinzu, die beschreibt,
         wie ein sicheres Passwort sein sollte.
 *** C: Sperrt das Benutzerkonto nach x fehlerhaften Einlog-Versuchen.
@@ -32,15 +32,15 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
 ** TECHNICAL
 A: Fängt das Event customer_save_before ab, prüft die beiden
         Felder und wirft bei Bedarf eine Exception.
-B: Über eine Layout-XML wird im Registrierungsformular im head die
-        mrg/securepassword.phtml eingebunden. Diese Datei beinhaltet
+B: Über eine Layout-XML wird im Registrierungsformular im Head die
+        mrg/securepassword.phtml eingebunden. Diese Datei beinhaltet einen
         Javascript Code, der das Password Feld sucht und dort den Hinweis
         einfügt.
 C: Legt die Kunden-Attribute FailedLogins und LastFailedLogin an.
         Dort wird die Anzahl der Versuche und der Timestamp des letzten
         Versuchs gespeichert.
         Fängt das LoginPost PreDispatch und PostDispatch Event ab.
-        Beim PreDispatch wird geguckt, ob der Benutzer gesperrt ist und
+        Beim PreDispatch wird geprüft, ob der Benutzer gesperrt ist und
         ein eventueller  Login-Versuch abgebrochen.
         PostDispatch loggt fehlerhafte Versuche und setzt bei bedarf
         die beiden angelegten Attribute, sodass die PreDispatch Methode
@@ -62,16 +62,16 @@ Website angepasst werden.
 *** A:
     1. Versuchen Sie als Passwort die Emailadresse bei der Registrierung
         zu verwenden.
-    2. Sie sollten eine Fehlermeldung bekommen
+    2. Sie sollten eine Fehlermeldung bekommen.
     3. Versuchen Sie sich mit einem anderen Passwort zu registrieren.
 *** B: Überpüfen Sie, ob beim Passwort-Feld der entsprechende Hinweis
         eingeblendet wird.
 *** C:
-    1. Versuchen Sie sich 5mal mit dem falschen Passwort anzumelden.
+    1. Versuchen Sie sich fünf mal mit dem falschen Passwort anzumelden.
     2. Beim nächsten Versuch sollte eine Meldung erscheinen, dass der
         Account gesperrt wurde, auch wenn Sie das korrekte Passwort eingeben.
-        Nach 15 Minuten sollte die Sperre wieder aufgehoben sein. Wenn Sie sich
-        in diesen 15 Minuten wieder versuchen, einzuloggen, fängt die
+        Nach 15 Minuten sollte die Sperre wieder aufgehoben sein. Wenn Sie versuchen sich
+        in diesen 15 Minuten wieder einzuloggen, fängt die
         Versuchszeit von vorn an.
 *** D: 
     1. Prüfen Sie, ob die Felder vorhanden und speicherbar sind.
@@ -81,8 +81,8 @@ Website angepasst werden.
     1. Geben Sie das Passwort solange falsch ein, bis der Account gesperrt
         wird.
     2. Gehen Sie in die Benutzerverwaltung im Backend, stellen Sie das Feld
-        "Benutzer entsperren" auf "ja" und speichern Sie den Kunden
+        "Benutzer entsperren" auf "ja" und speichern Sie den Kunden.
     3. Versuchen Sie sich im Frontend einzuloggen, das sollte jetzt ohne 
         Fehlermeldung funktionieren.
-    4. Sie können weitere verschieden Kombinationen aus Zeit und Login-Versuchen
+    4. Sie können weitere Kombinationen aus Zeit und Login-Versuchen
         kombinieren und prüfen, ob sich das Modul wie erwartet verhält.
