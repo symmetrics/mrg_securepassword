@@ -25,7 +25,7 @@
 <config>
     <modules>
         <Symmetrics_SecurePassword>
-            <version>0.1.22</version>
+            <version>0.1.23</version>
         </Symmetrics_SecurePassword>
     </modules>
     <global>
@@ -111,6 +111,11 @@
     <adminhtml>
         <translate>
             <modules>
+                <Mage_Customer>
+                    <files>
+                        <securepassword>Symmetrics_SecurePassword.csv</securepassword>
+                    </files>
+                </Mage_Customer>
                 <Symmetrics_SecurePassword>
                     <files>
                         <default>Symmetrics_SecurePassword.csv</default>
