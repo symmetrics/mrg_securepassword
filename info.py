@@ -65,6 +65,6 @@ DEPENDS_ON_FILES = (
 PEAR_KEY = ''
 
 COMPATIBLE_WITH = {
-     'magento': ['1.3.2.4', '1.4.0.0'],
+     'magento': ['1.3.2.4', '1.4.0.0', '1.4.0.1'],
      'magento_enterprise': ['1.3.2.4', '1.7.0.0', '1.7.1.0', '1.8.0.0'],
 }
