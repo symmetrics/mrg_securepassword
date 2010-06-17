@@ -21,7 +21,8 @@ hinweist, wie ein sicheres Passwort aussehen sollte.
         Wenn der Benutzer sich nach dem z.B. 4. Versuch richtig einloggt,
         wird der Zähler (für die falschen Versuche) auf 0 zurückgesetzt.
 *** D: Fügt 3 Felder in der System Konfiguration unter
-        Kunden/Kundenkonfiguration/Passwortoptionen ein, mit denen die
+        "Admin Panel -> System -> Konfiguration -> Kunden -> 
+        Kundenkonfiguration -> Passwortoptionen" ein, mit denen die
         Anzahl der fehlgeschlagenen Versuche, die Sperrzeit und die Versuchszeit
         geändert werden können.
         Wenn die Sperrzeit oder die Versuchszeit auf 0 steht, ist der
