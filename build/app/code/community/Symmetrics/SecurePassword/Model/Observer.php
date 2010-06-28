@@ -166,7 +166,6 @@ class Symmetrics_SecurePassword_Model_Observer
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
             die();
-            // @todo: find a workaround for the "die" cmd
         }
         
         return $this;
