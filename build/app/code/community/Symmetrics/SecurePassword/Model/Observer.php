@@ -171,7 +171,44 @@ class Symmetrics_SecurePassword_Model_Observer
         
         return $this;
     }
-    
+   
+    /**
+     * Check the customer password, i.e. it should not be equal to user's email
+     * 
+     * @param Varien_Event_Observer $observer Event observer object
+     * 
+     * @return Symmetrics_SecurePassword_Model_Observer
+     */
+    public function checkCustomerPassword($observer)
+    {
+        $controllerAction = $observer->getControllerAction();
+        /* @var Mage_Checkout_Model_Type_Onepage $onepageCheckout */
+        $onepageCheckout = $controllerAction->getOnepage();
+
+        // check if chekout is done in 'register user' mode
+        if ($onepageCheckout->getCheckoutMethod() != Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER) {
+            return $this;
+        }
+
+        // obtain email and password
+        $address = $onepageCheckout->getQuote()->getBillingAddress();
+        $email = $address->getEmail();
+        $password = $address->getCustomerPassword();
+
+        // assert that both are not equal
+        if ($email == $password) {
+            $error = array(
+                'error'   => -1,
+                'message' => Mage::helper('securepassword')->__('Your email and password can not be equal.'),
+            );
+            $response = $controllerAction->getResponse()->setBody(Mage::helper('core')->jsonEncode($error));
+            $response->sendResponse();
+            exit();
+        }
+
+        return $this;
+    }
+
     /**
      * Retrieve customer session model object
      *

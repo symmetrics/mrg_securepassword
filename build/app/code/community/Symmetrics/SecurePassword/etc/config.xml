@@ -67,6 +67,15 @@
                     </symmetrics_securepassword_model_observer>
                 </observers>
             </controller_action_postdispatch_customer_account_loginPost>
+            <controller_action_postdispatch_checkout_onepage_saveBilling>
+                <observers>
+                    <symmetrics_securepassword_model_observer>
+                        <type>singleton</type>
+                        <class>Symmetrics_SecurePassword_Model_Observer</class>
+                        <method>checkCustomerPassword</method>
+                    </symmetrics_securepassword_model_observer>
+                </observers>
+            </controller_action_postdispatch_checkout_onepage_saveBilling>
          </events>        
          <resources>
             <securepassword_setup>
