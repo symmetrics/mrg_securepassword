@@ -68,6 +68,12 @@ class Symmetrics_SecurePassword_Model_Observer
      */
     public function customerPostLogin($observer)
     {
+        // if customer has to many failed logins, logout him directly
+        // after login
+        if ($this->_getSession()->getIsAllowedToLogin() === false) {
+            $this->_getSession()->logout();
+            $this->_getSession()->setIsAllowedToLogin(true);
+        }
         if (!$this->_getSession()->isLoggedIn()) {
             //login failed
             $loginParams = $observer->getControllerAction()->getRequest()->getParams();
@@ -128,31 +134,9 @@ class Symmetrics_SecurePassword_Model_Observer
                     if (!$customer->getId()) {
                         throw new Exception('Login failed.');
                     }
-                    $now = time();
-                    $lockTime = $this->_getStoreConfig('lockTime');
                     
-                    $lastAttempt = $customer->getLastFailedLogin();
-                    $lastUnlock = $customer->getLastUnlockTime();
+                    $this->setCustomerLockStatus($customer);
                     
-                    $unlockedAdmin = ($lastUnlock > 0 && $lastUnlock > $lastAttempt);
-                    $unlockedTime = ($now - $lastAttempt > $lockTime);
-                    $unlocked = ($unlockedAdmin || $unlockedTime);
-                    
-                    if ($unlocked) {
-                        $customer->setFailedLogins(0)
-                            ->setLastFailedLogin(0)
-                            ->save();
-                    }
-                    
-                    $attempts = $customer->getFailedLogins();
-                    $lastAttempt = $customer->getLastFailedLogin();
-                    $attemptLock = $attempts >= $this->_getStoreConfig('loginAttempts');
-                    $timeLock = ($now - $lastAttempt < $lockTime);
-                    if ($attemptLock && $timeLock && !$unlocked) {
-                        throw new Exception(
-                            'Your account is locked due to too many failed login attempts.'
-                        );
-                    }
                 } else {
                     throw new Exception(
                         'The email address you entered is invalid.'
@@ -165,13 +149,87 @@ class Symmetrics_SecurePassword_Model_Observer
             $response = $controllerAction->getResponse();
             $response->setRedirect(Mage::helper('customer')->getLoginUrl());
             $response->sendResponse();
-            die();
-            // @todo: find a workaround for the "die" cmd
+            // customer is not allowed to login
+            $this->_getSession()->setIsAllowedToLogin(false);
         }
         
         return $this;
     }
     
+    /**
+     * Check if customer can be unlocked
+     *
+     * @param Mage_Customer_Model_Customer $customer Customer model
+     *
+     * @return void
+     */
+    public function setCustomerLockStatus($customer)
+    {
+        $now = time();
+        $lockTime = $this->_getStoreConfig('lockTime');
+        
+        $lastAttempt = $customer->getLastFailedLogin();
+        $lastUnlock = $customer->getLastUnlockTime();
+        
+        $unlockedAdmin = ($lastUnlock > 0 && $lastUnlock > $lastAttempt);
+        $unlockedTime = ($now - $lastAttempt > $lockTime);
+        $unlocked = ($unlockedAdmin || $unlockedTime);
+        
+        if ($unlocked) {
+            $customer->setFailedLogins(0)
+                ->setLastFailedLogin(0)
+                ->save();
+        }
+        
+        $attempts = $customer->getFailedLogins();
+        $lastAttempt = $customer->getLastFailedLogin();
+        $attemptLock = $attempts >= $this->_getStoreConfig('loginAttempts');
+        $timeLock = ($now - $lastAttempt < $lockTime);
+        
+        if ($attemptLock && $timeLock && !$unlocked) {
+            throw new Exception(
+                'Your account is locked due to too many failed login attempts.'
+            );
+        }
+    }
+   
+    /**
+     * Check the customer password, i.e. it should not be equal to user's email
+     * 
+     * @param Varien_Event_Observer $observer Event observer object
+     * 
+     * @return Symmetrics_SecurePassword_Model_Observer
+     */
+    public function checkCustomerPassword($observer)
+    {
+        $controllerAction = $observer->getControllerAction();
+        /* @var Mage_Checkout_Model_Type_Onepage $onepageCheckout */
+        $onepageCheckout = $controllerAction->getOnepage();
+
+        // check if chekout is done in 'register user' mode
+        if ($onepageCheckout->getCheckoutMethod() != Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER) {
+            return $this;
+        }
+
+        // obtain email and password
+        $address = $onepageCheckout->getQuote()->getBillingAddress();
+        $email = $address->getEmail();
+        $password = $address->getCustomerPassword();
+
+        // assert that both are not equal
+        if ($email == $password) {
+            $error = array(
+                'error'   => -1,
+                'message' => Mage::helper('securepassword')->__('Your email and password can not be equal.'),
+            );
+            $response = $controllerAction->getResponse()->setBody(Mage::helper('core')->jsonEncode($error));
+            $response->sendResponse();
+            return null;
+        }
+
+        return $this;
+    }
+
     /**
      * Retrieve customer session model object
      *

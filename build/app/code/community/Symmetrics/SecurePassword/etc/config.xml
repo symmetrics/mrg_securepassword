@@ -25,7 +25,7 @@
 <config>
     <modules>
         <Symmetrics_SecurePassword>
-            <version>0.1.26</version>
+            <version>0.1.27</version>
         </Symmetrics_SecurePassword>
     </modules>
     <global>
@@ -67,6 +67,15 @@
                     </symmetrics_securepassword_model_observer>
                 </observers>
             </controller_action_postdispatch_customer_account_loginPost>
+            <controller_action_postdispatch_checkout_onepage_saveBilling>
+                <observers>
+                    <symmetrics_securepassword_model_observer>
+                        <type>singleton</type>
+                        <class>Symmetrics_SecurePassword_Model_Observer</class>
+                        <method>checkCustomerPassword</method>
+                    </symmetrics_securepassword_model_observer>
+                </observers>
+            </controller_action_postdispatch_checkout_onepage_saveBilling>
          </events>        
          <resources>
             <securepassword_setup>
