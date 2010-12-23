@@ -1,89 +1,84 @@
 * DOCUMENTATION
 
 ** INSTALLATION
-Extrahieren Sie den Inhalt dieses Archivs in Ihr Magento Verzeichnis.
+Extract the content of this archive to your Magento directory.
 
 ** USAGE
-Dieses Modul verhindert, dass man die angegebene E-Mail Adresse auch
-als Passwort verwenden kann.
-Außerdem bietet es einen Brute-Force Schutz für das Login im
-Frontend. Es sperrt nach mehreren (einstellbar) fehlgeschlagenen
-Login-Versuchen zeitweise (einstellbar) den Account.
-Im Registrierungsformular wird eine Notiz eingeblendet, die darauf
-hinweist, wie ein sicheres Passwort aussehen sollte.
+This module prevents from using the specified e-mail address also 
+as password.
+Besides, it offers a brute force protection for the login in
+frontend. It temporarily (configurable) blocks an account after 
+several (configurabe) failed attempts to log in.
 
 ** FUNCTIONALITY
-*** A: Gibt eine Fehlermeldung aus, wenn man versucht, bei der
-        Registrierung das E-Mail und Password-Feld identisch auszufüllen.
-*** B: Fügt im Registrierungsformular eine Notiz hinzu, die beschreibt,
-        wie ein sicheres Passwort sein sollte.
-*** C: Sperrt das Benutzerkonto nach x fehlerhaften Einlog-Versuchen.
-        Wenn der Benutzer sich nach dem z.B. 4. Versuch richtig einloggt,
-        wird der Zähler (für die falschen Versuche) auf 0 zurückgesetzt.
-*** D: Fügt 3 Felder in der System Konfiguration unter
-        "Admin Panel -> System -> Konfiguration -> Kunden -> 
-        Kundenkonfiguration -> Passwortoptionen" ein, mit denen die
-        Anzahl der fehlgeschlagenen Versuche, die Sperrzeit und die Versuchszeit
-        geändert werden können.
-        Wenn die Sperrzeit oder die Versuchszeit auf 0 steht, ist der
-        Brute-Force Schutz de factor außer Kraft gesetzt.
-*** E: Im Backend wird ein Feld hinzugefügt, womit der Kunde manuell
-        entsperrt werden kann.
+*** A: Displays an error message when upon registration it is attempted 
+       to fill in the e-mail and password fields identically.
+*** B: Adds a note to the registration form that describes
+       how a secure password should be.
+*** C: Blocks the user account after x failed login attempts.
+       When the user after for example 4th attempt logs in correctly,
+       the counter (for the wrong attempts) is set on 0.
+*** D: Adds 3 fields in the system configuration under
+       Admin panel-> system → configuration → customers ->
+       customer configuration → password options”
+       with which the number of failed attempts, the block time and
+	   the time for attempts can be changed.
+        When the block time or the time for attempts is on 0, the
+        brute force protection is de facto suspended.
+*** E: In backend a field is added with which the customer can be
+         manually unblocked.
 
 ** TECHNICAL
-A: Fängt das Event customer_save_before ab, prüft die beiden
-        Felder und wirft bei Bedarf eine Exception.
-B: Über eine Layout-XML wird im Registrierungsformular im Head die
-        mrg/securepassword.phtml eingebunden. Diese Datei beinhaltet einen
-        Javascript Code, der das Password Feld sucht und dort den Hinweis
-        einfügt.
-C: Legt die Kunden-Attribute FailedLogins und LastFailedLogin an.
-        Dort wird die Anzahl der Versuche und der Timestamp des letzten
-        Versuchs gespeichert.
-        Fängt das LoginPost PreDispatch und PostDispatch Event ab.
-        Beim PreDispatch wird geprüft, ob der Benutzer gesperrt ist und
-        ein eventueller  Login-Versuch abgebrochen.
-        PostDispatch loggt fehlerhafte Versuche und setzt bei bedarf
-        die beiden angelegten Attribute, sodass die PreDispatch Methode
-        den Login-Versuch abbricht.
-D: Die 3 Felder werden über die system.xml angelegt.
-E: Es werden über ein Migrationsskript 2 Felder angelegt: 
-        last_unlock_time und unlock_customer.
-        Letzteres kann in der Kundenverwaltung im Backend auf "ja" gestellt
-        werden. Ein Observer fängt das Event customer_save_before ab und
-        setzt das Feld auf "Nein" zurück und setzt die anderen beiden Felder 
-        (s. Punkt B) wieder auuf 0, damit der Kunde sich einloggen kann.
+A: Catches the event  customer_save_before, checks the both
+        fields and when necessary throws an exception.
+B: Through a layout-XML the  mrg/securepassword.phtml is integrated
+        in registration form in head. This data contains a
+        Javascript code, that searches a password field and adds a note
+        there.
+C: Creates the customer attributes FailedLogins and LastFailedLogin.
+        The number of attempts and the timestamp of the last attempt is
+        saved there.
+        Catches the LoginPost PreDispatch and PostDispatch event.
+        Upon  PreDispatch it is checked if the user is locked and
+        a possible login attempt aborted.
+        PostDispatch logs failed attempts and when necessary sets
+        the both created attributes, so that the PreDispatch method
+        aborts the login.
+D: The 3 fields are created through the  system.xml.
+E: 2 fields are created through the migrations script: 
+        last_unlock_time and unlock_customer.
+        The latter can be set on “yes” in the customer management in
+        backend. An observer catches the event customer_save_before,
+        and sets the field back on “no” and sets other fields (see item B) 
+        again on 0, so that the customer can login.
 
 ** PROBLEMS
-Der Passworthinweis im Registrierungsformular muss ggf. an das Design der 
-Website angepasst werden.
+The password note in registration form must when appropriate  
+be adapted to the design of the web site.
 
 * TESTCASES
 ** BASIC
 *** A:
-    1. Versuchen Sie als Passwort die Emailadresse bei der Registrierung
-        zu verwenden.
-    2. Sie sollten eine Fehlermeldung bekommen.
-    3. Versuchen Sie sich mit einem anderen Passwort zu registrieren.
-*** B: Überpüfen Sie, ob beim Passwort-Feld der entsprechende Hinweis
-        eingeblendet wird.
+    1. Upon the registration, try to use the e-mail address as password.
+    2. You should get an error message.
+    3. Try to register with another password.
+*** B: Check if a corresponding note appears at the password field. 
 *** C:
-    1. Versuchen Sie sich fünf mal mit dem falschen Passwort anzumelden.
-    2. Beim nächsten Versuch sollte eine Meldung erscheinen, dass der
-        Account gesperrt wurde, auch wenn Sie das korrekte Passwort eingeben.
-        Nach 15 Minuten sollte die Sperre wieder aufgehoben sein. Wenn Sie versuchen sich
-        in diesen 15 Minuten wieder einzuloggen, fängt die
-        Versuchszeit von vorn an.
+    1. Try to login with the wrong password five times.
+    2. Upon the next attempt a message should appear that the account 
+        has been blocked,  even if you enter a correct password.
+        After 15 minutes the block should be disabled again. If you try 
+        to login after these 15 minutes again, the time for attempts 
+        starts  from the beginning.
 *** D: 
-    1. Prüfen Sie, ob die Felder vorhanden und speicherbar sind.
-    2. Ändern Sie die Werte und prüfen Sie, ob sich die Funktionalität
-        entsprechend der neuen Werte anpasst.
+    1. Check if the fields are available and can be saved..
+    2. Change the values and check that the functionality is updated
+        according to the new values.
 *** E: 
-    1. Geben Sie das Passwort solange falsch ein, bis der Account gesperrt
-        wird.
-    2. Gehen Sie in die Benutzerverwaltung im Backend, stellen Sie das Feld
-        "Benutzer entsperren" auf "ja" und speichern Sie den Kunden.
-    3. Versuchen Sie sich im Frontend einzuloggen, das sollte jetzt ohne 
-        Fehlermeldung funktionieren.
-    4. Sie können weitere Kombinationen aus Zeit und Login-Versuchen
-        kombinieren und prüfen, ob sich das Modul wie erwartet verhält.
+    1. Enter the wrong password as long as the account gets blocked.
+    2.Go to customer management in backend, set the “Benutzer entsperren"
+        (“Unlock customer”)  field on “yes” and save.
+    3. Try to login in frontend, this should work without the error  
+        message now.
+    4. You can combine and check other combinations of time and login attempts,
+        in order to check if the behavior of module is as expected.
