@@ -25,7 +25,7 @@
 <config>
     <modules>
         <Symmetrics_SecurePassword>
-            <version>0.1.32</version>
+            <version>0.1.33</version>
         </Symmetrics_SecurePassword>
     </modules>
     <global>
