@@ -206,8 +206,15 @@ class Symmetrics_SecurePassword_Model_Observer
         /* @var Mage_Checkout_Model_Type_Onepage $onepageCheckout */
         $onepageCheckout = $controllerAction->getOnepage();
 
+        //  Magento version 1.4.0.1 has a typo in method name
+        if (version_compare(Mage::getVersion(), '1.4.0.1', '=')) {
+            $method = $onepageCheckout->getCheckoutMehod();
+        } else {
+            $method = $onepageCheckout->getCheckoutMethod();
+        }
+        
         // check if chekout is done in 'register user' mode
-        if ($onepageCheckout->getCheckoutMethod() != Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER) {
+        if ($method != Mage_Checkout_Model_Type_Onepage::METHOD_REGISTER) {
             return $this;
         }
 
