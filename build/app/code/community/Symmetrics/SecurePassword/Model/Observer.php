@@ -226,9 +226,9 @@ class Symmetrics_SecurePassword_Model_Observer
         }
 
         // obtain email and password
-        $address = $onepageCheckout->getQuote()->getBillingAddress();
-        $email = $address->getEmail();
-        $password = $address->getCustomerPassword();
+        $params = $observer->getControllerAction()->getRequest()->getParams();
+        $email = $params['billing']['email'];
+        $password = $params['billing']['customer_password'];
 
         // assert that both are not equal
         if ($email == $password) {
@@ -237,11 +237,7 @@ class Symmetrics_SecurePassword_Model_Observer
                 'message' => Mage::helper('securepassword')->__('Your email and password can not be equal.'),
             );
             $response = $controllerAction->getResponse()
-                ->setBody(
-                    Mage::helper('core')->jsonEncode($error)
-                );
-            $response->sendResponse();
-            // @todo: check redirect
+                ->setBody(Mage::helper('core')->jsonEncode($error));
         }
 
         return $this;
