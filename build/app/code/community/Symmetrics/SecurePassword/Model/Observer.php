@@ -68,12 +68,6 @@ class Symmetrics_SecurePassword_Model_Observer
      */
     public function customerPostLogin($observer)
     {
-        // if customer has to many failed logins, logout him directly
-        // after login
-        if ($this->_getSession()->getIsAllowedToLogin() === false) {
-            $this->_getSession()->logout();
-            $this->_getSession()->setIsAllowedToLogin(true);
-        }
         if (!$this->_getSession()->isLoggedIn()) {
             //login failed
             $loginParams = $observer->getControllerAction()->getRequest()->getParams();
@@ -146,11 +140,24 @@ class Symmetrics_SecurePassword_Model_Observer
         } catch (Exception $e) {
             $this->_getSession()
                 ->addError(Mage::helper('securepassword')->__($e->getMessage()));
+
+            /**
+             * Please note: It is not the best way to just change the content of
+             * this server variable, but there is no way to force a redirect
+             * from an Event Observer the Magento way.
+             * It is either this, overriding a controller or doing a
+             * header();die();
+             * This way works, because the loginpost action - which is executed
+             * directly after this event - checks explicitly for the request
+             * method and goes straigt to the post dispatch event if it isn't
+             * POST.
+             */
+            $loginUrl = Mage::helper('customer')->getLoginUrl();
+            $_SERVER['REQUEST_METHOD'] = 'GET';
+            $this->_getSession()->setBeforeAuthUrl($loginUrl);
             $response = $controllerAction->getResponse();
-            $response->setRedirect(Mage::helper('customer')->getLoginUrl());
+            $response->setRedirect($loginUrl);
             $response->sendResponse();
-            // customer is not allowed to login
-            $this->_getSession()->setIsAllowedToLogin(false);
         }
         
         return $this;
@@ -229,9 +236,12 @@ class Symmetrics_SecurePassword_Model_Observer
                 'error'   => -1,
                 'message' => Mage::helper('securepassword')->__('Your email and password can not be equal.'),
             );
-            $response = $controllerAction->getResponse()->setBody(Mage::helper('core')->jsonEncode($error));
+            $response = $controllerAction->getResponse()
+                ->setBody(
+                    Mage::helper('core')->jsonEncode($error)
+                );
             $response->sendResponse();
-            return null;
+            // @todo: check redirect
         }
 
         return $this;
