@@ -236,7 +236,7 @@ class Symmetrics_SecurePassword_Model_Observer
                 'error'   => -1,
                 'message' => Mage::helper('securepassword')->__('Your email and password can not be equal.'),
             );
-            $response = $controllerAction->getResponse()
+            $controllerAction->getResponse()
                 ->setBody(Mage::helper('core')->jsonEncode($error));
         }
 
