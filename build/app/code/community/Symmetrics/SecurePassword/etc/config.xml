@@ -39,7 +39,7 @@
                 <class>Symmetrics_SecurePassword_Helper</class>
             </securepassword>
         </helpers>
-    	<events>
+        <events>
             <customer_save_before>
                 <observers>
                     <symmetrics_securepassword_model_observer>
@@ -76,7 +76,16 @@
                     </symmetrics_securepassword_model_observer>
                 </observers>
             </controller_action_postdispatch_checkout_onepage_saveBilling>
-         </events>        
+             <adminhtml_customer_prepare_save>
+                 <observers>
+                     <symmetrics_securepassword_model_observer>
+                         <type>singleton</type>
+                         <class>Symmetrics_SecurePassword_Model_Observer</class>
+                         <method>adminCheckCustomerPassword</method>
+                     </symmetrics_securepassword_model_observer>
+                 </observers>
+             </adminhtml_customer_prepare_save>
+         </events>
          <resources>
             <securepassword_setup>
                 <setup>

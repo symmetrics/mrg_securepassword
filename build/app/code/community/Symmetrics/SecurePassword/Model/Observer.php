@@ -284,4 +284,22 @@ class Symmetrics_SecurePassword_Model_Observer
     {
         return Mage::getStoreConfig('customer/password/' . $parameter, $this->_getStore());
     }
+    
+    /**
+     * Check the customer password, i.e. it should not be equal to user's email
+     *
+     * @param Varien_Event_Observer $observer Event observer object
+     *
+     * @return void
+     */
+    public function adminCheckCustomerPassword($observer)
+    {
+        $post = $observer->getRequest()->getPost();
+        if ($post['account']['email'] == $post['account']['new_password']) {
+            Mage::getSingleton('adminhtml/session')->addError(
+                Mage::helper('securepassword')->__('Email and password can not be equal.')
+            );
+            throw new Exception(Mage::helper('securepassword')->__('An error occurred while saving the customer.'));
+        }
+    }
 }
