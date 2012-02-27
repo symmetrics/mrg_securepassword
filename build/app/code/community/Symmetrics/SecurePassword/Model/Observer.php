@@ -152,12 +152,14 @@ class Symmetrics_SecurePassword_Model_Observer
              * method and goes straigt to the post dispatch event if it isn't
              * POST.
              */
-            $loginUrl = Mage::helper('customer')->getLoginUrl();
-            $_SERVER['REQUEST_METHOD'] = 'GET';
-            $this->_getSession()->setBeforeAuthUrl($loginUrl);
-            $response = $controllerAction->getResponse();
-            $response->setRedirect($loginUrl);
-            $response->sendResponse();
+            if (!strpos($this->_getSession()->getBeforeAuthUrl(), 'checkout')) {
+                $loginUrl = Mage::helper('customer')->getLoginUrl();
+                $_SERVER['REQUEST_METHOD'] = 'GET';
+                $this->_getSession()->setBeforeAuthUrl($loginUrl);
+                $response = $controllerAction->getResponse();
+                $response->setRedirect($loginUrl);
+                $response->sendResponse();
+            }
         }
         
         return $this;
