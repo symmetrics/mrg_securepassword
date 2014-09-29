@@ -1,0 +1,15 @@
+build/app/code/community/Symmetrics/SecurePassword/etc/config.xml app/code/community/Symmetrics/SecurePassword/etc/config.xml
+build/app/code/community/Symmetrics/SecurePassword/etc/system.xml app/code/community/Symmetrics/SecurePassword/etc/system.xml
+build/app/code/community/Symmetrics/SecurePassword/Helper/Data.php app/code/community/Symmetrics/SecurePassword/Helper/Data.php
+build/app/code/community/Symmetrics/SecurePassword/Model/Observer.php app/code/community/Symmetrics/SecurePassword/Model/Observer.php
+build/app/code/community/Symmetrics/SecurePassword/Model/Setup.php app/code/community/Symmetrics/SecurePassword/Model/Setup.php
+build/app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-install-0.1.0.php app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-install-0.1.0.php
+build/app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.10-0.1.11.php app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.10-0.1.11.php
+build/app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.14-0.1.15.php app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.14-0.1.15.php
+build/app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.24-0.1.26.php app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.24-0.1.26.php
+build/app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.25-0.1.27.php app/code/community/Symmetrics/SecurePassword/sql/securepassword_setup/mysql4-upgrade-0.1.25-0.1.27.php
+build/app/design/frontend/default/default/layout/securepassword.xml app/design/frontend/default/default/layout/securepassword.xml
+build/app/design/frontend/default/default/template/mrg/securepassword.phtml app/design/frontend/default/default/template/mrg/securepassword.phtml
+build/app/etc/modules/Symmetrics_SecurePassword.xml app/etc/modules/Symmetrics_SecurePassword.xml
+build/app/locale/de_CH/Symmetrics_SecurePassword.csv app/locale/de_CH/Symmetrics_SecurePassword.csv
+build/app/locale/de_DE/Symmetrics_SecurePassword.csv app/locale/de_DE/Symmetrics_SecurePassword.csv
